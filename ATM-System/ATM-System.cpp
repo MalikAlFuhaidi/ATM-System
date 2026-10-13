@@ -26,6 +26,25 @@ sClient CurrentClient;
 //void ShowQuickWithDrawScreen();
 void Login();
 
+
+string ReadAccountNumber()
+{
+    string AccountNumber = "";
+    cout << "Enter AccountNumber? ";
+    getline(cin >> ws, AccountNumber);
+
+    return AccountNumber;
+}
+
+string ReadPinCode()
+{
+    string PinCode = "";
+    cout << "Enter Pin? ";
+    getline(cin >> ws, PinCode);
+
+    return PinCode;
+}
+
 vector<string> SplitString(string S1, string Delim)
 {
     vector<string> vString;
@@ -148,9 +167,55 @@ vector <sClient> LoadCleintsDataFromFile(string FileName)
 
 }
 
+bool FindClientByAccountNumberAndPinCode(string AccountNumber, string PinCode, sClient& CurrentClient)
+{
+    vector <sClient> vClients = LoadCleintsDataFromFile(ClientsFileName);
+
+    for (sClient C : vClients)
+    {
+        if (C.AccountNumber == AccountNumber && C.PinCode == PinCode)
+        {
+            CurrentClient = C;
+            return true;
+        }
+
+    }
+    return false;
+
+}
+
+bool LoadClientInfo(string AccountNumber, string PinCode)
+{
+    if (FindClientByAccountNumberAndPinCode(AccountNumber, PinCode, CurrentClient))
+        return true;
+    else
+        return false;
+}
+
 void Login()
 {
+    bool LoginFaild = false;
 
+    do
+    {
+        system("cls");
+        cout << "\n-----------------------------------\n";
+        cout << "\tLogin Screen";
+        cout << "\n-----------------------------------\n";
+
+        if (LoginFaild)
+        {
+            cout << "\nInvalid AccountNumber/Pin!\n\n";
+        }
+
+        string AccountNumber = ReadAccountNumber();
+        string PinCode = ReadPinCode();
+
+        LoginFaild = !LoadClientInfo(AccountNumber, PinCode);
+    } while (LoginFaild);
+
+    cout << "\nLogin successful. Welcome, "
+        << CurrentClient.Name << "!\n";
 }
 
 int main()

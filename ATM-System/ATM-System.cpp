@@ -330,7 +330,15 @@ void ShowNormalWithDrawScreen()
 
 void QuickWithdraw(double Amount)
 {
-    ValidateAmountExceeds(Amount);
+    //ValidateAmountExceeds(Amount);
+    if (Amount > CurrentClient.AccountBalance)
+    {
+        cout << "\nInsufficient balance for this withdrawal.";
+        cout << "\nYour current balance is: "
+            << CurrentClient.AccountBalance << '\n';
+
+        return;
+    }
 
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, (-1 * Amount));
 }

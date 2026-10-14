@@ -192,6 +192,18 @@ bool LoadClientInfo(string AccountNumber, string PinCode)
         return false;
 }
 
+double ValidateAmountExceeds(double Amount)
+{
+    //Validate that the amount does not exceeds the balance
+    while (Amount > CurrentClient.AccountBalance)
+    {
+        cout << "\nAmount Exceeds the balance, you can withdraw up to : " << CurrentClient.AccountBalance << endl;
+        cout << "Please enter another amount? ";
+        cin >> Amount;
+    }
+    return Amount;
+}
+
 bool DepositBalanceToClientByAccountNumber(string AccountNumber, double Amount)
 {
     vector <sClient> vClients = LoadCleintsDataFromFile(ClientsFileName);
@@ -244,6 +256,28 @@ void ShowCheckBalanceScreen()
     cout << "\n-----------------------------------\n";
 
     cout << "\n\nYour Balance is " << CurrentClient.AccountBalance << endl;
+
+}
+
+void ShowNormalWithDrawScreen()
+{
+    cout << "\n-----------------------------------\n";
+    cout << "\tNormal Withdraw Screen";
+    cout << "\n-----------------------------------\n";
+
+    //double Amount = 0;
+    int Amount = 0;
+    do
+    {
+        cout << "\nEnter an amount multiple of 5's ? ";
+        cin >> Amount;
+
+    } while (Amount % 5 != 0);
+
+    //Validate that the amount does not exceeds the balance
+    ValidateAmountExceeds(Amount);
+
+    DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount * -1);
 
 }
 

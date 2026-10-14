@@ -1,4 +1,4 @@
-﻿# ATM System
+# ATM System
 
 A console-based Automated Teller Machine (ATM) application developed in C++.
 
@@ -6,12 +6,13 @@ A console-based Automated Teller Machine (ATM) application developed in C++.
 
 - Client authentication using account numbers and PIN codes.
 - Quick withdrawal with predefined amounts.
-- Normal withdrawal.
-- Deposit transactions with confirmation.
+- Normal withdrawal using positive amounts in multiples of five.
+- Deposit transactions with positive amounts.
 - Balance inquiry.
-- File-based client data persistence.
-- Console menus and navigation.
-- Logout and return to the login screen.
+- Balance validation for withdrawal transactions.
+- Transaction confirmation before updating account balances.
+- File-based client data persistence using `Clients.txt`.
+- Console menus, navigation, and logout.
 
 ## Technologies
 
@@ -23,18 +24,12 @@ A console-based Automated Teller Machine (ATM) application developed in C++.
 
 ## Project Structure
 
-```text
-ATM-System/
-├── .gitignore
-├── README.md
-├── ATM-System.sln
-└── ATM-System/
-    ├── ATM-System.cpp
-    ├── ATM-System.vcxproj
-    ├── ATM-System.vcxproj.filters
-    ├── 0
-    └── Clients.txt
-```
+- `ATM-System.sln` — Visual Studio solution.
+- `ATM-System/ATM-System.cpp` — Application source code.
+- `ATM-System/ATM-System.vcxproj` — C++ project configuration.
+- `ATM-System/ATM-System.vcxproj.filters` — Visual Studio file filters.
+- `ATM-System/Clients.txt` — Client records used by the application.
+- `.gitignore` — Files excluded from Git tracking.
 
 ## Build and Run
 
@@ -50,10 +45,18 @@ Client records are stored in `Clients.txt`, with fields separated by `#//#`:
 
 `AccountNumber#//#PinCode#//#Name#//#Phone#//#AccountBalance`
 
-The application loads client information from the file and saves balance changes after confirmed transactions.
+The application loads client information from the file and saves updated balances after confirmed transactions.
+
+## Amount Validation
+
+- Normal withdrawals reject zero and negative amounts.
+- Normal withdrawals require amounts that are multiples of five.
+- Withdrawal amounts are checked against the available account balance.
+- Deposits reject zero and negative amounts.
+- Quick withdrawals are rejected when the selected amount exceeds the available balance.
+
+Non-numeric console input validation is not included in this version and may be addressed in future projects.
 
 ## Security Notice
 
-This project is intended for learning and demonstration. PIN codes are stored in plain text, so the current implementation must not be used with real financial accounts or sensitive personal information.
-
-Further improvements to input validation and transaction handling are planned.
+This project is intended for educational purposes. PIN codes are stored in plain text, so this implementation must not be used with real financial accounts or sensitive personal information.

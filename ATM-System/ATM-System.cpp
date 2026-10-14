@@ -54,6 +54,15 @@ short ReadQuickWithdrawOption()
     return Choice;
 }
 
+short ReadATMMainMenueOption()
+{
+    cout << "Choose what do you want to do? [1 to 5]? ";
+    short Choice = 0;
+    cin >> Choice;
+
+    return Choice;
+}
+
 vector<string> SplitString(string S1, string Delim)
 {
     vector<string> vString;
@@ -355,6 +364,63 @@ void ShowQuickWithDrawScreen()
     cout << "Your Balance is " << CurrentClient.AccountBalance << endl;
 
     PerfromQuickWithdrawOption((enQuickWithdrawOptions)ReadQuickWithdrawOption());
+}
+
+void PerfromATMMenueOption(enATMMainMenueOptions ATMMenueOption)
+{
+    switch (ATMMenueOption)
+    {
+    case enATMMainMenueOptions::eQuickWithdraw:
+    {
+        system("cls");
+        ShowQuickWithDrawScreen();
+        //GoBackToATMMenue();
+        break;
+    }
+    case enATMMainMenueOptions::eNormalWithdraw:
+    {
+        system("cls");
+        ShowNormalWithDrawScreen();
+       // GoBackToATMMenue();
+        break;
+    }
+    case enATMMainMenueOptions::eDeposit:
+    {
+        system("cls");
+        ShowDepositScreen();
+       // GoBackToATMMenue();
+        break;
+    }
+    case enATMMainMenueOptions::eCheckBalances:
+    {
+        system("cls");
+        ShowCheckBalanceScreen();
+       // GoBackToATMMenue();
+        break;
+    }
+    case enATMMainMenueOptions::Logout:
+    {
+        system("cls");
+        Login();
+        break;
+    }
+    }
+
+}
+
+void ShowATMMainMenue()
+{
+    system("cls");
+    cout << "===========================================\n";
+    cout << "\t\tShow ATM Main Menue Screen\n";
+    cout << "===========================================\n";
+    cout << "\t[1] Quick Withdraw.\n";
+    cout << "\t[2] Normal Withdraw.\n";
+    cout << "\t[3] Deposit.\n";
+    cout << "\t[4] Check Balances.\n";
+    cout << "\t[5] Logout.\n";
+    cout << "===========================================\n";
+    PerfromATMMenueOption((enATMMainMenueOptions)ReadATMMainMenueOption());
 }
 
 void Login()

@@ -22,8 +22,8 @@ struct sClient
 const string ClientsFileName = "Clients.txt";
 sClient CurrentClient;
 
-//void ShowATMMainMenue();
-//void ShowQuickWithDrawScreen();
+void ShowATMMainMenue();
+void ShowQuickWithDrawScreen();
 void Login();
 
 
@@ -306,45 +306,68 @@ void QuickWithdraw(double Amount)
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, (-1 * Amount));
 }
 
+void GoBackToATMMenue()
+{
+    cout << "\n\nPress any key to go back to ATM Main Menue...";
+    system("pause>0");
+    ShowATMMainMenue();
+
+}
+
+void GoBackToQuickWithdrawMenu()
+{
+    cout << "\n\nPress any key to go back to Quick Withdraw Menue...";
+    system("pause>0");
+    ShowQuickWithDrawScreen();
+}
+
 void PerfromQuickWithdrawOption(enQuickWithdrawOptions QuickWithdrawOption)
 {
     switch (QuickWithdrawOption)
     {
     case enQuickWithdrawOptions::eQWithdraw20:
         QuickWithdraw(20);
-        //GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw50:
         QuickWithdraw(50);
-        //GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw100:
         QuickWithdraw(100);
-       // GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw200:
         QuickWithdraw(200);
-       // GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw400:
         QuickWithdraw(400);
-        //GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw600:
         QuickWithdraw(600);
-       // GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw800:
         QuickWithdraw(800);
-       // GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     case enQuickWithdrawOptions::eQWithdraw1000:
         QuickWithdraw(1000);
-      //  GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     default:
-        //ShowATMMainMenue();
-        break;
+        if ((short)QuickWithdrawOption == 9)
+        {
+            GoBackToATMMenue();
+            return;
+        }
+
+        system("cls");
+        cout << "\nInvalid option.\n";
+        GoBackToQuickWithdrawMenu();
+        return;
     }
 }
 
@@ -374,28 +397,28 @@ void PerfromATMMenueOption(enATMMainMenueOptions ATMMenueOption)
     {
         system("cls");
         ShowQuickWithDrawScreen();
-        //GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     }
     case enATMMainMenueOptions::eNormalWithdraw:
     {
         system("cls");
         ShowNormalWithDrawScreen();
-       // GoBackToATMMenue();
+        GoBackToATMMenue();
         break;
     }
     case enATMMainMenueOptions::eDeposit:
     {
         system("cls");
         ShowDepositScreen();
-       // GoBackToATMMenue();
+       GoBackToATMMenue();
         break;
     }
     case enATMMainMenueOptions::eCheckBalances:
     {
         system("cls");
         ShowCheckBalanceScreen();
-       // GoBackToATMMenue();
+       GoBackToATMMenue();
         break;
     }
     case enATMMainMenueOptions::Logout:
@@ -445,8 +468,7 @@ void Login()
         LoginFaild = !LoadClientInfo(AccountNumber, PinCode);
     } while (LoginFaild);
 
-    cout << "\nLogin successful. Welcome, "
-        << CurrentClient.Name << "!\n";
+    ShowATMMainMenue();
 }
 
 int main()

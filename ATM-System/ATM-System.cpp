@@ -192,6 +192,53 @@ bool LoadClientInfo(string AccountNumber, string PinCode)
         return false;
 }
 
+bool DepositBalanceToClientByAccountNumber(string AccountNumber, double Amount)
+{
+    vector <sClient> vClients = LoadCleintsDataFromFile(ClientsFileName);
+
+    char Answer = 'n';
+    cout << "\n\nAre you sure you want perfrom this transaction? y/n ? ";
+    cin >> Answer;
+
+    if (Answer == 'y' || Answer == 'Y')
+    {
+
+        for (sClient& C : vClients)
+        {
+            if (C.AccountNumber == AccountNumber)
+            {
+                C.AccountBalance += Amount;
+                SaveCleintsDataToFile(ClientsFileName, vClients);
+                CurrentClient = C;
+                cout << "\n\nDone Successfully. New balance is: " << C.AccountBalance;
+                return true;
+            }
+        }
+
+        return false;
+    }
+    else
+    {
+        return false;
+    }
+
+}
+
+void ShowDepositScreen()
+{
+    cout << "\n-----------------------------------\n";
+    cout << "\tDeposit Screen";
+    cout << "\n-----------------------------------\n";
+
+    double Amount = 0.0;
+    cout << "\nPlease enter Positve deposit amount? ";
+    cin >> Amount;
+
+    DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount);
+}
+
+
+
 void Login()
 {
     bool LoginFaild = false;

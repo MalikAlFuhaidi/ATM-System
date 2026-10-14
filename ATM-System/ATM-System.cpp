@@ -237,7 +237,15 @@ void ShowDepositScreen()
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount);
 }
 
+void ShowCheckBalanceScreen()
+{
+    cout << "\n-----------------------------------\n";
+    cout << "\tCheck Balance Screen";
+    cout << "\n-----------------------------------\n";
 
+    cout << "\n\nYour Balance is " << CurrentClient.AccountBalance << endl;
+
+}
 
 void Login()
 {

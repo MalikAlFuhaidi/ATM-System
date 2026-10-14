@@ -45,6 +45,15 @@ string ReadPinCode()
     return PinCode;
 }
 
+short ReadQuickWithdrawOption()
+{
+    cout << "Choose what to withdraw from [1] to [8]? ";
+    short Choice = 0;
+    cin >> Choice;
+
+    return Choice;
+}
+
 vector<string> SplitString(string S1, string Delim)
 {
     vector<string> vString;
@@ -279,6 +288,73 @@ void ShowNormalWithDrawScreen()
 
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount * -1);
 
+}
+
+void QuickWithdraw(double Amount)
+{
+    ValidateAmountExceeds(Amount);
+
+    DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, (-1 * Amount));
+}
+
+void PerfromQuickWithdrawOption(enQuickWithdrawOptions QuickWithdrawOption)
+{
+    switch (QuickWithdrawOption)
+    {
+    case enQuickWithdrawOptions::eQWithdraw20:
+        QuickWithdraw(20);
+        //GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw50:
+        QuickWithdraw(50);
+        //GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw100:
+        QuickWithdraw(100);
+       // GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw200:
+        QuickWithdraw(200);
+       // GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw400:
+        QuickWithdraw(400);
+        //GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw600:
+        QuickWithdraw(600);
+       // GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw800:
+        QuickWithdraw(800);
+       // GoBackToATMMenue();
+        break;
+    case enQuickWithdrawOptions::eQWithdraw1000:
+        QuickWithdraw(1000);
+      //  GoBackToATMMenue();
+        break;
+    default:
+        //ShowATMMainMenue();
+        break;
+    }
+}
+
+void ShowQuickWithDrawScreen()
+{
+    system("cls");
+    cout << "\n=============================================\n";
+    cout << "\tQuick Withdraw ";
+    cout << "\n=============================================\n";
+    cout << "\t[1] 20  \t\t [2] 50 \n";
+    cout << "\t[3] 100 \t\t [4] 200 \n";
+    cout << "\t[5] 400 \t\t [6] 600 \n";
+    cout << "\t[7] 800 \t\t [8] 1000 \n";
+    cout << "\t[9]Exit ";
+    cout << "\n=============================================\n";
+
+    cout << "Your Balance is " << CurrentClient.AccountBalance << endl;
+
+    PerfromQuickWithdrawOption((enQuickWithdrawOptions)ReadQuickWithdrawOption());
 }
 
 void Login()

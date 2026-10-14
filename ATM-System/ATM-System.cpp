@@ -261,8 +261,18 @@ void ShowDepositScreen()
     cout << "\n-----------------------------------\n";
 
     double Amount = 0.0;
-    cout << "\nPlease enter Positve deposit amount? ";
-    cin >> Amount;
+
+    do
+    {
+        cout << "\nPlease enter a positive deposit amount? ";
+        cin >> Amount;
+
+        if (Amount <= 0)
+        {
+            cout << "\nInvalid amount. Deposit amount must be greater than zero.\n";
+        }
+
+    } while (Amount <= 0);
 
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount);
 }
@@ -283,25 +293,52 @@ void ShowNormalWithDrawScreen()
     cout << "\tNormal Withdraw Screen";
     cout << "\n-----------------------------------\n";
 
-    //double Amount = 0;
     int Amount = 0;
-    do
+
+    while (true)
     {
-        cout << "\nEnter an amount multiple of 5's ? ";
+        cout << "\nEnter a positive amount multiple of 5: ";
         cin >> Amount;
 
-    } while (Amount % 5 != 0);
+        if (Amount <= 0)
+        {
+            cout << "\nAmount must be greater than zero.\n";
+            continue;
+        }
 
-    //Validate that the amount does not exceeds the balance
-    ValidateAmountExceeds(Amount);
+        if (Amount % 5 != 0)
+        {
+            cout << "\nAmount must be a multiple of 5.\n";
+            continue;
+        }
 
-    DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount * -1);
+        // Keep the validated amount returned by the function.
+        Amount = static_cast<int>(ValidateAmountExceeds(Amount));
 
+        // Validate again because the user may enter a replacement amount.
+        if (Amount <= 0 || Amount % 5 != 0)
+        {
+            cout << "\nAmount must be positive and a multiple of 5.\n";
+            continue;
+        }
+
+        break;
+    }
+
+    DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, -Amount);
 }
 
 void QuickWithdraw(double Amount)
 {
-    ValidateAmountExceeds(Amount);
+    //ValidateAmountExceeds(Amount);
+    if (Amount > CurrentClient.AccountBalance)
+    {
+        cout << "\nInsufficient balance for this withdrawal.";
+        cout << "\nYour current balance is: "
+            << CurrentClient.AccountBalance << '\n';
+
+        return;
+    }
 
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, (-1 * Amount));
 }

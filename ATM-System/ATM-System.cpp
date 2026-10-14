@@ -261,8 +261,18 @@ void ShowDepositScreen()
     cout << "\n-----------------------------------\n";
 
     double Amount = 0.0;
-    cout << "\nPlease enter Positve deposit amount? ";
-    cin >> Amount;
+
+    do
+    {
+        cout << "\nPlease enter a positive deposit amount? ";
+        cin >> Amount;
+
+        if (Amount <= 0)
+        {
+            cout << "\nInvalid amount. Deposit amount must be greater than zero.\n";
+        }
+
+    } while (Amount <= 0);
 
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, Amount);
 }
@@ -317,7 +327,6 @@ void ShowNormalWithDrawScreen()
 
     DepositBalanceToClientByAccountNumber(CurrentClient.AccountNumber, -Amount);
 }
-
 
 void QuickWithdraw(double Amount)
 {
